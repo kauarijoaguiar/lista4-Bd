@@ -1,7 +1,4 @@
 
-
-JULIAAAA
-
 --A)
 SELECT INGREDIENTE.NOME AS NOMEINGREDIENTE FROM INGREDIENTE
     JOIN SABORINGREDIENTE ON SABORINGREDIENTE.INGREDIENTE = INGREDIENTE.CODIGO
@@ -70,11 +67,66 @@ GROUP BY SABOR.NOME
 HAVING PEDIDOS > 20;
 
 -- I)
+SELECT INGREDIENTE.NOME AS NOME, COUNT(COMANDA) AS PEDIDOS FROM PIZZA
+JOIN COMANDA ON PIZZA.COMANDA = COMANDA.NUMERO
+JOIN PIZZASABOR ON PIZZA.CODIGO = PIZZASABOR.PIZZA
+JOIN SABOR ON PIZZASABOR.SABOR = SABOR.CODIGO
+JOIN SABORINGREDIENTE ON SABORINGREDIENTE.SABOR = SABOR.CODIGO
+JOIN INGREDIENTE ON SABORINGREDIENTE.INGREDIENTE = INGREDIENTE.CODIGO
+WHERE COMANDA.DATA BETWEEN date ('now', '-12 months', 'localtime' ) 
+AND DATE ('now')
+GROUP BY INGREDIENTE.NOME
+ORDER BY 2 DESC;
 
 -- J)
+SELECT  case strftime('%m', COMANDA.DATA, 'localtime')
+        when '01' then 'janeiro'
+        when '02' then 'fevereiro'
+        when '03' then 'marco'
+        when '04' then 'abril'
+        when '05' then 'maio'
+        when '06' then 'junho'
+        when '07' then 'julho'
+        when '08' then 'agosto'
+        when '09' then 'setembro'
+        when '10' then 'outubro'
+        when '11' then 'novembro'
+        when '12' then 'dezembro'
+    end AS MES,
+    SABOR.NOME AS NOME, COUNT(COMANDA) AS PEDIDOS FROM PIZZA
+JOIN COMANDA ON PIZZA.COMANDA = COMANDA.NUMERO
+JOIN PIZZASABOR ON PIZZA.CODIGO = PIZZASABOR.PIZZA
+JOIN SABOR ON PIZZASABOR.SABOR = SABOR.CODIGO
+JOIN TIPO ON SABOR.TIPO = TIPO.CODIGO
+WHERE COMANDA.DATA BETWEEN date ('now', '-12 months', 'localtime' ) 
+AND DATE ('now') AND UPPER(TIPO.NOME) LIKE '%SALGADAS%'
+GROUP BY MES
+ORDER BY strftime('%m', COMANDA.DATA, 'localtime');
 
 -- K)
-
+SELECT  case strftime('%m', COMANDA.DATA, 'localtime')
+        when '01' then 'janeiro'
+        when '02' then 'fevereiro'
+        when '03' then 'marco'
+        when '04' then 'abril'
+        when '05' then 'maio'
+        when '06' then 'junho'
+        when '07' then 'julho'
+        when '08' then 'agosto'
+        when '09' then 'setembro'
+        when '10' then 'outubro'
+        when '11' then 'novembro'
+        when '12' then 'dezembro'
+    end AS MES,
+    SABOR.NOME AS NOME, COUNT(COMANDA) AS PEDIDOS FROM PIZZA
+JOIN COMANDA ON PIZZA.COMANDA = COMANDA.NUMERO
+JOIN PIZZASABOR ON PIZZA.CODIGO = PIZZASABOR.PIZZA
+JOIN SABOR ON PIZZASABOR.SABOR = SABOR.CODIGO
+JOIN TIPO ON SABOR.TIPO = TIPO.CODIGO
+WHERE COMANDA.DATA BETWEEN date ('now', '-12 months', 'localtime' ) 
+AND DATE ('now') AND UPPER(TIPO.NOME) LIKE '%DOCES%'
+GROUP BY MES
+ORDER BY strftime('%m', COMANDA.DATA, 'localtime');
 -- L)
 
 -- M)
