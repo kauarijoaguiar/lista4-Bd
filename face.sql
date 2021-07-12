@@ -1,19 +1,3 @@
-    /*
-fiz uma entidade site 
-fiz uma entidade amigoscomum_usuario como aux
-fiz uma entidade amigoscomum
-fiz um autorelacionamento em comentario
-fiz um autorelacionamento em usuario
-fiz uma entidade usuario_grupo como aux
-fiz uma entidade grupo
-fiz uma entidade citados 
-fiz uma entidade assunto
-coloquei codigo nas entidades como pk
-coloquei os cod_(alguma coisa ) como fk, para pesquisar
-e arrumei as ligações 
-*/
-    
-    
     drop table grupo;
     drop table usuariogrupo;
     drop table compartilhamento;
@@ -76,8 +60,10 @@ e arrumei as ligações
     primary key (codigo)
     );
 
-/*
+
     insert into amigos(codigo,email_usuario, nome, dataa, pais) values
+    (1, 'mcalbuq@mymail.com', 'Kauã', '2021-05-17 10:00', 'Brasil' )
+   /*
     (1,1,'João Silva Brasil', '2021-05-17 10:00', 'Brasil'),
     (2,1,'Pedro Alencar Pereira', '2021-05-17 10:05', 'Brasil' ),
     (3,1,'Maria Cruz Albuquerque','2021-05-17 10:10','Brasil' ),
@@ -182,62 +168,5 @@ create table grupo(
     foreign key (email_usuario) references usuario(email),
     primary key (codigo)
 );
-
-
-/*
-Modificações:
-Coloquei datetime nas tables
-
-a)select * from assunto
-where cod_post = 5;
-
-b)select count (*) as quantidade from reacao
-where cod_usuario = 2;
-
-c)select count (*) as quantidade from post
-where datetime(dataa) > datetime('now', '-1 month', 'localtime') and cod_usuario = 2; 
-
-d)select dataa from post
-where cod_usuario = 4
-order by dataa desc;
-
-e) select cod_usuario, count (*) as quantidade from post
-where datetime(dataa) > datetime('now', '-1 months', 'localtime') and pais = 'Brasil'
-group by cod_usuario
-having count (*) > 50;
-
-f)select date(dataa), count (*) as quantidade from post
-where datetime(dataa) > datetime('now', '-7 days', 'localtime') and pais = "Brasil"
-order by quantidade;
-
-g)select cidade, count (*) as quantidade from usuario
-group by cidade
-order by quantidade;
-
-h)select estado, count (*) as quantidade from usuario
-group by estado
-order by quantidade;
-
-i)select cod_usuario, count (*) as quantidade from amigos
-group by cod_usuario
-having count (*) > 100;
-
-j)select cod_usuario, count (*) as quantidade from amigos
-where pais ='Brasil'
-group by cod_usuario
-having count (*) > 100;
-
-k)select count (*) as quantidade from usuario
-where datetime(dataa) > datetime('now', '-12 months', 'localtime') and pais = 'Brasil';
-
-l)select date(dataa), count (*) as quantidade from post
-where datetime(dataa) > datetime('now', '-3 months', 'localtime') and pais ='Brasil';
-
-m)select (count(cod_usuario)/count(distinct cod_post)) as media from reacao
-where datetime(dataa) > datetime('now', '-3 months', 'localtime') and cod_post = 3
-group by cod_post;
-
-n)Não consegui fazer :(
-*/
 
 
