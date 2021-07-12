@@ -21,9 +21,7 @@ CREATE TABLE USUARIO(
     CIDADE CHAR(100),
     PAIS CHAR(100),
     UF CHAR(100),
-    DATAULTIMOPOST DATETIME,
-    TOTALAMIGOS INTEGER,
-    PRIMARY KEY (CODIGO)
+    PRIMARY KEY (EMAIL)
 );
 
 CREATE TABLE AMIZADE(
@@ -101,97 +99,68 @@ CREATE TABLE POST(
 
 INSERT INTO
     USUARIO(
-        CODIGO,
+        EMAIL,
         NOME,
         DATACADASTRO,
         CIDADE,
         PAIS,
-        UF,
-        DATAULTIMOPOST,
-        TOTALAMIGOS
+        UF
     )
 VALUES
     (
-        1,
-        'Professor de BD',
-        '2010-01-01 09:00:00',
-        'Rio Grande',
-        'Brasil',
-        'RS',
-        '2021-06-02 15:35:00',
-        5
-    ),
-    (
-        2,
+        'joaosbras@mymail.com',
         'João Silva Brasil',
         '2020-01-01 13:00:00',
         'Rio Grande',
         'Brasil',
-        'RS',
-        '2021-06-02 15:30:00',
-        2
+        'RS'
     ),
     (
-        3,
-        'Pedro Alencar Pereira',
-        '2020-01-01 13:05:00',
-        'Rio Grande',
-        'Brasil',
-        'RS',
+        'pmartinssilva90@mymail.com',
+        'Paulo Martins Silva',
         null,
-        2
+        null,
+        null,
+        null
     ),
     (
-        4,
+        'mcalbuq@mymail.com',
         'Maria Cruz Albuquerque',
         '2020-01-01 13:10:00',
         'Rio Grande',
         'Brasil',
-        'RS',
-        null,
-        1
+        'RS'
     ),
     (
-        5,
+        'jorosamed@mymail.com',
         'Joana Rosa Medeiros',
         '2020-01-01 13:15:00',
         'Rio Grande',
         'Brasil',
-        'RS',
-        '2021-06-02 15:15:00',
-        1
+        'RS'
     ),
     (
-        6,
+        'pxramos@mymail.com',
         'Paulo Xavier Ramos',
         '2020-01-01 13:20:00',
         'Rio Grande',
         'Brasil',
-        'RS',
-        '2021-06-02 15:20:00',
-        1
+        'RS'
     ),
     (
-        7,
-        'IFRS campus Rio Grande',
+        'pele@cbf.com.br',
+        'Edson Arantes do Nascimento',
         null,
-        'Rio Grande',
+        'Três Corações',
         'Brasil',
-        'RS',
-        null,
-        0
+        'MG'
     );
 
 INSERT INTO
-    AMIZADE(CODIGOUSUARIO1, CODIGOUSUARIO2, DATAAMIZADE)
+    AMIZADE(EMAIL_USUARIO1, EMAIL_USUARIO2, DATAAMIZADE)
 VALUES
-    (1, 2, '2021-05-17 10:00:00'),
-    (1, 3, '2021-05-17 10:05:00'),
-    (1, 4, '2021-05-17 10:10:00'),
-    (1, 5, '2021-05-17 10:15:00'),
-    (2, 3, '2021-05-17 10:15:00'),
-    (1, 6, '2021-05-17 10:20:00');
-
+    ('pxramos@mymail.com','jorosamed@mymail.com', '2021-05-17 10:15:00'),
+    ('jorosamed@mymail.com', 'pele@cbf.com.br', '2021-05-17 10:15:00');
 INSERT INTO
     POST(
         CODIGO,
@@ -207,7 +176,7 @@ INSERT INTO
 VALUES
     (
         1,
-        2,
+        'joaosbras@mymail.com',
         'Hoje eu aprendi como inserir dados no SQLite no IFRS',
         'Rio Grande',
         'RS',
@@ -217,19 +186,8 @@ VALUES
         2
     ),
     (
-        2,
-        1,
-        'Atendimento de BD no GMeet amanhã para quem tiver dúvidas de INSERT',
-        'Rio Grande',
-        'RS',
-        'Brasil',
-        '2021-06-02 15:35:00',
-        null,
-        0
-    ),
-    (
         3,
-        5,
+        'jorosamed@mymail.com',
         'Alguém mais ficou com dúvida no comando INSERT?',
         'Rio Grande',
         'RS',
@@ -240,7 +198,7 @@ VALUES
     ),
     (
         4,
-        6,
+        'pxramos@mymail.com',
         'Eu também',
         'Rio Grande',
         'RS',
@@ -251,7 +209,7 @@ VALUES
     ),
     (
         5,
-        2,
+        'joaosbras@mymail.com',
         'Já agendaste horário de atendimento com o professor?',
         'Rio Grande',
         'RS',
@@ -278,18 +236,7 @@ VALUES
     (3, 2),
     (3, 3),
     (5, 4),
-    (5, 1),
-    (2, 4),
-    (2, 1),
-    (2, 2),
-    (2, 3);
-
-INSERT INTO
-    CITACAO (CODIGO, COD_POST, EMAIL_USUARIO)
-VALUES
-    (1, 1, 7),
-    (2, 2, 5),
-    (3, 2, 6);
+    (5, 1);
 
 INSERT INTO
     REACAO(
@@ -304,19 +251,9 @@ INSERT INTO
     )
 values
     (
-        1,
-        'Curtida',
-        3,
-        'Rio Grande',
-        'RS',
-        'Brasil',
-        1,
-        '2021-06-02 15:05:00'
-    ),
-    (
         2,
         'Curtida',
-        4,
+        'mcalbuq@mymail.com',
         'Rio Grande',
         'RS',
         'Brasil',
@@ -326,7 +263,7 @@ values
     (
         3,
         'Triste',
-        6,
+        'pxramos@mymail.com',
         'Rio Grande',
         'RS',
         'Brasil',
@@ -334,22 +271,4 @@ values
         '2021-06-02 15:20:00'
     );
 
-INSERT INTO
-    COMPARTILHAMENTO(
-        CODIGO,
-        EMAIL_USUARIO,
-        COD_POST,
-        CIDADE,
-        UF,
-        DATACOMPARTILHAMENTO
-    )
-VALUES
-    (
-        1,
-        2,
-        2,
-        'Rio Grande',
-        'RS',
-        '2021-06-02 15:40:00'
-    );
 
