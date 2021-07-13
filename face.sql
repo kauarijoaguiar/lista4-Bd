@@ -13,7 +13,7 @@ ORDER BY 2 DESC;
 
 --G)
 SELECT COUNT(*) AS QUANTIDADE FROM POST
---JOIN
+--JOIN fazendo
 WHERE PAIS = 'Brasil' AND POST.DATAPOST BETWEEN date ('now', '-3 months', 'localtime' ) 
 AND DATE ('now') 
 GROUP BY QUANTIDADE
@@ -32,12 +32,13 @@ SELECT COUNT(*) AS QUANTIDADE FROM POST
 
 --I)
 SELECT USUARIO.NOME AS NOME, COUNT(REACAO) FROM POST 
---JOIN
+--JOIN fazendo
 WHERE REACAO.DATAREACAO BETWEEN date ('now', '-30 days', 'localtime' ) 
     AND DATE ('now')
     AND USUARIO.PAIS = 'Brasil'
     GROUP BY QUANTIDADE
     ORDER BY USUARIO;
+    --a
 --J)
 
 --K)
