@@ -77,7 +77,7 @@ WHERE REACAO.DATAREACAO BETWEEN date ('now', '-30 days', 'localtime' )
 SELECT COUNT (*) AS QUANTIDADE FROM REACAO;
 
 
-
+--a
 --K)
 --L)
 --M)
