@@ -1,7 +1,27 @@
+/*
+CODICO DO USURIO VIROU EMAIL
+RETIREI AS TRALHAS
+CRIAMOS UM GRUPO 
+
+
+*/
+
+
+
+
+
 --A)
---SELECT USUARIO.NOME AS NOME FROM USUARIO
+SELECT CASE WHEN USUARIO1.EMAIL= 'mcalbuq@mymail.com' THEN USUARIO2.NOME
+ELSE USUARIO1.NOME 
+END AS NOME
+FROM AMIZADE
+JOIN USUARIO USUARIO1 ON AMIZADE.EMAIL_USUARIO1= USUARIO1.EMAIL
+JOIN USUARIO USUARIO2 ON AMIZADE.EMAIL_USUARIO2= USUARIO2.EMAIL
+WHERE USUARIO1.EMAIL= 'mcalbuq@mymail.com' OR USUARIO2.EMAIL= 'mcalbuq@mymail.com';
 
 --B)
+
+
 --C)
 -- SELECT (POST.QTDREACOES/) FROM ASSUNTO
 --     JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOASSUNTO = ASSUNTO.CODIGO
@@ -27,13 +47,11 @@ GROUP BY ASSUNTO.ASSUNTO
 ORDER BY 2 DESC;
 
 --G)
-SELECT COUNT(*) AS QUANTIDADE FROM POST
-JOIN POST ON POST.PAIS = POST.CODIGO
+SELECT POST.UF AS ESTADO, COUNT(*) AS QUANTIDADE FROM POST
 WHERE POST.PAIS = 'Brasil' AND POST.DATAPOST BETWEEN date ('now', '-3 months', 'localtime' ) 
 AND DATE ('now') 
-GROUP BY QUANTIDADE
-ORDER BY DATAPOST;
---AJUDA
+GROUP BY ESTADO
+ORDER BY 2 ASC;
 
 --H)
 SELECT POST.POST AS POST, COUNT(*) AS QUANTIDADE FROM POST
@@ -56,6 +74,10 @@ WHERE REACAO.DATAREACAO BETWEEN date ('now', '-30 days', 'localtime' )
     GROUP BY POST
     ORDER BY QUANTIDADE;
 --J)
+SELECT COUNT (*) AS QUANTIDADE FROM REACAO;
+
+
+
 --K)
 --L)
 --M)
@@ -90,6 +112,7 @@ DROP TABLE POST;
 DROP TABLE GRUPO;
 
 DROP TABLE GRUPOUSUARIO;
+
 
 CREATE TABLE USUARIO(
     EMAIL CHAR (100) NOT NULL,
@@ -180,10 +203,23 @@ CREATE TABLE POST(
     DATAPOST DATETIME,
     CODPOSTREFERENCIA INTEGER,
     QTDREACOES INTEGER NOT NULL DEFAULT 0,
+CODIGOGRUPO INTEGER,
     FOREIGN KEY (EMAIL_USUARIO) REFERENCES USUARIO(EMAIL),
     FOREIGN KEY (CODPOSTREFERENCIA) REFERENCES POST(CODIGO),
+    FOREIGN KEY (CODIGOGRUPO) REFERENCES GRUPO(CODIGO),
     PRIMARY KEY (CODIGO)
 );
+
+    INSERT INTO 
+    GRUPO(
+        CODIGO,
+        NOMEGRUPO
+    )
+    VALUES
+    (
+        1,
+        'SQLite'
+    );
 
 INSERT INTO
     USUARIO(
@@ -248,7 +284,9 @@ INSERT INTO
     AMIZADE(EMAIL_USUARIO1, EMAIL_USUARIO2, DATAAMIZADE)
 VALUES
     ('pxramos@mymail.com','jorosamed@mymail.com', '2021-05-17 10:15:00'),
-    ('jorosamed@mymail.com', 'pele@cbf.com.br', '2021-05-17 10:15:00');
+    ('jorosamed@mymail.com', 'pele@cbf.com.br', '2021-05-17 10:15:00'),
+    ('mcalbuq@mymail.com', 'pele@cbf.com.br', '2021-05-17 10:20:00' ),
+    ( 'jorosamed@mymail.com','mcalbuq@mymail.com','2021-05-17 10:20:00' );
 INSERT INTO
     POST(
         CODIGO,
@@ -259,7 +297,8 @@ INSERT INTO
         PAIS,
         DATAPOST,
         CODPOSTREFERENCIA,
-        QTDREACOES
+        QTDREACOES,
+        CODIGOGRUPO
     )
 VALUES
     (
@@ -271,7 +310,8 @@ VALUES
         'Brasil',
         '2021-06-02 15:00:00',
         null,
-        2
+        2,
+        null
     ),
     (
         3,
@@ -281,6 +321,7 @@ VALUES
         'RS',
         'Brasil',
         '2021-06-02 15:15:00',
+        1,
         1,
         1
     ),
@@ -293,7 +334,8 @@ VALUES
         'Brasil',
         '2021-06-02 15:20:00',
         3,
-        0
+        0,
+        null
     ),
     (
         5,
@@ -304,7 +346,8 @@ VALUES
         'Brasil',
         '2021-06-02 15:30:00',
         4,
-        0
+        0,
+        null
     );
 
 INSERT INTO
@@ -358,5 +401,6 @@ values
         3,
         '2021-06-02 15:20:00'
     );
+
 
 
