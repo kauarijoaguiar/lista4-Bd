@@ -121,6 +121,7 @@ CREATE TABLE POST(
     PAIS CHAR (100) NOT NULL,
     DATAPOST DATETIME,
     CODPOSTREFERENCIA INTEGER,
+    QTDCOMENTARIOS INTEGER NOT NULL DEFAULT 0,
     QTDREACOES INTEGER NOT NULL DEFAULT 0,
 CODIGOGRUPO INTEGER,
     FOREIGN KEY (EMAIL_USUARIO) REFERENCES USUARIO(EMAIL),
@@ -235,6 +236,7 @@ INSERT INTO
         DATAPOST,
         CODPOSTREFERENCIA,
         QTDREACOES,
+        QTDCOMENTARIOS,
         CODIGOGRUPO
     )
 VALUES
@@ -247,6 +249,7 @@ VALUES
         'Brasil',
         '2021-06-02 15:00:00',
         null,
+        1,
         2,
         null
     ),
@@ -260,6 +263,7 @@ VALUES
         '2021-06-02 15:15:00',
         1,
         1,
+        0,
         1
     ),
     (
@@ -271,6 +275,7 @@ VALUES
         'Brasil',
         '2021-06-02 15:20:00',
         3,
+        0,
         0,
         null
     ),
@@ -284,6 +289,7 @@ VALUES
         '2021-06-02 15:30:00',
         4,
         0,
+        0,
         null
     ),
     (
@@ -296,7 +302,21 @@ VALUES
         '2021-06-08 18:30:00',
         null,
         0,
-        null
+        0,
+        2
+    ),
+    (
+        7,
+        'pele@cbf.com.br',
+        'Show!',
+        'Rio Grande',
+        'RS',
+        'Brasil',
+        '2021-06-08 20:34:02',
+        6,
+        0,
+        0,
+        2
     );
 
 INSERT INTO
@@ -394,8 +414,9 @@ WHERE USUARIO1.EMAIL= 'mcalbuq@mymail.com' OR USUARIO2.EMAIL= 'mcalbuq@mymail.co
 
 --B)
 
-SELECT CASE WHEN USUARIO1.EMAIL= 'jorosamed@mymail.com' AND USUARIO2.EMAIL='pxramos@mymail.com'
-OR USUARIO2.EMAIL= 'jorosamed@mymail.com' AND USUARIO1.EMAIL='pxramos@mymail.com'
+
+SELECT CASE WHEN USUARIO1.EMAIL= 'jorosamed@mymail.com' OR USUARIO2.EMAIL='pxramos@mymail.com'
+OR USUARIO2.EMAIL= 'jorosamed@mymail.com' OR USUARIO1.EMAIL='pxramos@mymail.com'
 THEN USUARIO2.NOME OR USUARIO1.NOME
 ELSE USUARIO1.NOME OR USUARIO2.NOME
 END AS NOME
@@ -404,6 +425,7 @@ JOIN USUARIO USUARIO1 ON AMIZADE.EMAIL_USUARIO1= USUARIO1.EMAIL
 JOIN USUARIO USUARIO2 ON AMIZADE.EMAIL_USUARIO2= USUARIO2.EMAIL
 WHERE USUARIO1.EMAIL= 'jorosamed@mymail.com' AND USUARIO2.EMAIL= 'pxramos@mymail.com'
 OR  USUARIO2.EMAIL= 'jorosamed@mymail.com' AND USUARIO1.EMAIL= 'pxramos@mymail.com';
+
 
 --C)
 SELECT (CAST(SUM(POST.QTDREACOES) AS REAL)/CAST(COUNT(POST) AS REAL)) AS MEDIA FROM POST
@@ -468,6 +490,13 @@ WHERE CODIGOGRUPO = 1
 AND POST.DATAPOST BETWEEN date ('now', '-60 days', 'localtime' ) 
 AND DATE ('now');
 --K)
+
+SELECT USUARIO.NOME FROM POST POSTPRINCIPAL 
+LEFT JOIN USUARIO ON POSTPRINCIPAL.EMAIL_USUARIO=USUARIO.EMAIL
+LEFT JOIN POST COMENTARIO ON POSTPRINCIPAL.CODIGO = COMENTARIO.CODPOSTREFERENCIA
+WHERE COMENTARIO.EMAIL_USUARIO='pele@cbf.com.br' AND 
+COMENTARIO.DATAPOST BETWEEN date ('now', '-1 months', 'localtime') 
+AND DATE ('now');
 
 --L)
 SELECT DISTINCT(CASE WHEN UPPER(GRUPOUSUARIO1.NOMEGRUPO)= 'BANCO DE DADOS-IFRS-2021' THEN USUARIO2.NOME
