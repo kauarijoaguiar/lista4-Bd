@@ -1,12 +1,14 @@
 
 /*
-o email virou pk do usuario, antes era usuado codigo;
-Criamos uma table grupo;
-Colocamos genero e data de nascimento para os usuarios;
-Foi acrescentado os novos usuarios;
+2)
+o email se tornou primaty key da tabela de usuarios, antes era usado codigo;
+Criamos uma table grupo e uma tabela de associação de grupo com usuário;
+Colocamos genero, data de nascimento e quantidade de comentários para os usuarios, foi necessário indicar quantidade de comentáriosm pela impossibilidade
+de utilizar subselect nesta lista;
+Foi acrescentado os novos usuarios e outras informações para uso dos selects;
 Retiramos a  coluna na tabela de usuário que totaliza a quantidade de amigos
 do usuario para que não seja acessada mais de uma tabela para receber essa informação e logo depois trata-la ;
-Retiramos o campo (dataUltimoPost);
+Retiramos o campo (dataUltimoPost) do usuário por não ser necessário;
 */
 
 
