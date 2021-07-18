@@ -1,12 +1,13 @@
 /*
-CODICO DO USURIO VIROU EMAIL
-RETIREI AS TRALHAS
-CRIAMOS UM GRUPO 
-
-
+o email virou pk do usuario, antes era usuado codigo;
+Criamos uma table grupo;
+Colocamos genero e data de nascimento para os usuarios;
+Foi acrescentado os novos usuarios;
+Retiramos a  coluna na tabela de usuário que totaliza a quantidade de amigos
+do usuario para que não seja acessada mais de uma tabela para receber essa informação e logo depois trata-la ;
+Retiramos o campo (qtdReacoes);
+Retiramos o campo (dataUltimoPost);
 */
-
-
 
 
 
@@ -74,10 +75,12 @@ WHERE REACAO.DATAREACAO BETWEEN date ('now', '-30 days', 'localtime' )
     GROUP BY POST
     ORDER BY QUANTIDADE;
 --J)
-SELECT COUNT (*) AS QUANTIDADE FROM REACAO;
+SELECT COUNT (COD_POST) AS QUANTIDADE FROM REACAO
 
 
---a
+WHERE CODIGOGRUPO = 1
+AND POST.DATAPOST BETWEEN date ('now', '-60 days', 'localtime' ) 
+AND DATE ('now');
 --K)
 --L)
 --M)
@@ -121,6 +124,8 @@ CREATE TABLE USUARIO(
     CIDADE CHAR(100),
     PAIS CHAR(100),
     UF CHAR(100),
+    GENERO char (1),
+    NASCIMENTO date,
     PRIMARY KEY (EMAIL)
 );
 
@@ -228,7 +233,9 @@ INSERT INTO
         DATACADASTRO,
         CIDADE,
         PAIS,
-        UF
+        UF,
+        GENERO,
+        NASCIMENTO
     )
 VALUES
     (
@@ -237,7 +244,9 @@ VALUES
         '2020-01-01 13:00:00',
         'Rio Grande',
         'Brasil',
-        'RS'
+        'RS',
+        'M',
+        '1998-02-02'
     ),
     (
         'pmartinssilva90@mymail.com',
@@ -245,7 +254,9 @@ VALUES
         null,
         null,
         null,
-        null
+        null,
+        'M',
+        '2003-05-23'
     ),
     (
         'mcalbuq@mymail.com',
@@ -253,7 +264,9 @@ VALUES
         '2020-01-01 13:10:00',
         'Rio Grande',
         'Brasil',
-        'RS'
+        'RS',
+        'F',
+        '2002-11-04'
     ),
     (
         'jorosamed@mymail.com',
@@ -261,7 +274,9 @@ VALUES
         '2020-01-01 13:15:00',
         'Rio Grande',
         'Brasil',
-        'RS'
+        'RS',
+        'N',
+        '1974-02-05'
     ),
     (
         'pxramos@mymail.com',
@@ -269,7 +284,9 @@ VALUES
         '2020-01-01 13:20:00',
         'Rio Grande',
         'Brasil',
-        'RS'
+        'RS',
+        'N',
+        '1966-03-30'
     ),
     (
         'pele@cbf.com.br',
@@ -277,7 +294,9 @@ VALUES
         null,
         'Três Corações',
         'Brasil',
-        'MG'
+        'MG',
+        'M',
+        '1940-10-23'
     );
 
 INSERT INTO
