@@ -285,6 +285,18 @@ VALUES
         4,
         0,
         null
+    ),
+    (
+        6,
+        'pmartinssilva90@mymail.com',
+        'Ontem aprendi sobre joins no SQLite na disciplina de banco de dados do IFRS.',
+        'Rio Grande',
+        'RS',
+        'Brasil',
+        '2021-06-08 18:30:00',
+        null,
+        0,
+        null
     );
 
 INSERT INTO
@@ -304,7 +316,9 @@ VALUES
     (3, 2),
     (3, 3),
     (5, 4),
-    (5, 1);
+    (5, 1),
+    (6, 1),
+    (6, 2);
 
 INSERT INTO
     REACAO(
@@ -352,6 +366,22 @@ values
     'mcalbuq@mymail.com');
     
 
+INSERT INTO COMPARTILHAMENTO(
+    CODIGO,
+    EMAIL_USUARIO,
+    COD_POST,
+    CIDADE,
+    UF,
+    DATACOMPARTILHAMENTO
+) VALUES
+(
+    1, 
+    'joaosbras@mymail.com',
+    6,
+    'Rio Grande',
+    'RS', 
+    '2021-06-10 13:00:00'
+);
 
 --A)
 SELECT CASE WHEN USUARIO1.EMAIL= 'mcalbuq@mymail.com' THEN USUARIO2.NOME
@@ -451,3 +481,10 @@ WHERE (REACAO.DATAREACAO BETWEEN REACAO.DATAREACAO
     HAVING NUMEROREACOES > 1000;
 
 --N)
+SELECT ASSUNTO.ASSUNTO FROM COMPARTILHAMENTO 
+LEFT JOIN POST ON COMPARTILHAMENTO.COD_POST = POST.CODIGO
+LEFT JOIN ASSUNTOPOST ON ASSUNTOPOST.CODIGOPOST = POST.CODIGO
+LEFT JOIN ASSUNTO ON ASSUNTOPOST.CODIGOASSUNTO = ASSUNTO.CODIGO
+WHERE COMPARTILHAMENTO.EMAIL_USUARIO = 'joaosbras@mymail.com' 
+AND COMPARTILHAMENTO.DATACOMPARTILHAMENTO BETWEEN date ('now', '-3 months', 'localtime' ) 
+    AND DATE ('now');
